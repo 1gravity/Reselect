@@ -23,10 +23,10 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
         maven("https://kotlin.bintray.com/kotlinx")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
         mavenCentral()
+        jcenter()
     }
 
     group = project.properties["GROUP"]!!
