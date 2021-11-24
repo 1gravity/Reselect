@@ -1,12 +1,11 @@
 
 buildscript {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
-        maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
-        maven("https://plugins.gradle.org/m2/")
+        maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
-        jcenter()
     }
 
     dependencies {
@@ -22,11 +21,11 @@ plugins {
 
 allprojects {
     repositories {
+        gradlePluginPortal()
         google()
-        maven("https://kotlin.bintray.com/kotlinx")
-        maven("https://oss.sonatype.org/content/repositories/snapshots")
         mavenCentral()
-        jcenter()
+        maven("https://jitpack.io")
+        maven("https://oss.sonatype.org/content/repositories/snapshots")
     }
 
     group = project.properties["GROUP"]!!

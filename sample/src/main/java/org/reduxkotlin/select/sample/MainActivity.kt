@@ -1,4 +1,4 @@
-package org.reduxkotlin.reselect.sample
+package org.reduxkotlin.select.sample
 
 import android.os.Bundle
 import android.view.Menu
@@ -6,44 +6,39 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.reduxkotlin.Reducer
-import org.reduxkotlin.StoreSubscription
-import org.reduxkotlin.Thunk
-import org.reduxkotlin.applyMiddleware
-import org.reduxkotlin.createStore
-import org.reduxkotlin.createThunkMiddleware
-import org.reduxkotlin.select
-import org.reduxkotlin.selectors
+import org.reduxkotlin.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var loadingIndicator: ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
         loadingIndicator = findViewById(R.id.loading_indicator)
 
-        fab.setOnClickListener { view ->
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             store.dispatch(networkRequest())
             Snackbar.make(view, "Make a fake network request", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-//        subscription = store.select({ it.isLoading }) {
-//            loadingIndicator.visibility = if (store.state.isLoading) View.VISIBLE else View.GONE
-//        }
+        subscription = store.select({ it.isLoading }) {
+            loadingIndicator.visibility = if (it) View.VISIBLE else View.GONE
+        }
 
         multiSubscription = store.selectors {
             select({ it.isLoading }) {
-                loadingIndicator.visibility = if (store.state.isLoading) View.VISIBLE else View.GONE
+                loadingIndicator.visibility = if (it) View.VISIBLE else View.GONE
             }
         }
     }

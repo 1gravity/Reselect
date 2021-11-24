@@ -7,99 +7,167 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
-    /**
-     * https://developer.android.com/studio
-     */
-    const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
-        Versions.com_android_tools_build_gradle
+  /**
+   * https://developer.android.com/jetpack/androidx/releases/appcompat#1.4.0
+   */
+  const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
 
-    const val dokka_gradle_plugin: String = "org.jetbrains.dokka:dokka-gradle-plugin:" +
-        Versions.dokka_gradle_plugin
+  /**
+   * http://tools.android.com
+   */
+  const val constraintlayout: String = "androidx.constraintlayout:constraintlayout:" +
+      Versions.constraintlayout
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_annotation_processing_gradle: String =
-        "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:" + Versions.org_jetbrains_kotlin
+  /**
+   * https://developer.android.com/jetpack/androidx/releases/core#1.7.0
+   */
+  const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
 
-    const val kotlin_compiler_embeddable: String =
-        "org.jetbrains.kotlin:kotlin-compiler-embeddable:" + Versions.org_jetbrains_kotlin
+  /**
+   * https://developer.android.com/topic/libraries/architecture/index.html
+   */
+  const val navigation_fragment_ktx: String = "androidx.navigation:navigation-fragment-ktx:" +
+      Versions.androidx_navigation
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://developer.android.com/topic/libraries/architecture/index.html
+   */
+  const val navigation_ui_ktx: String = "androidx.navigation:navigation-ui-ktx:" +
+      Versions.androidx_navigation
 
-    const val kotlin_klib_commonizer_embeddable: String =
-        "org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable:" + Versions.org_jetbrains_kotlin
+  /**
+   * https://developer.android.com/testing
+   */
+  const val espresso_core: String = "androidx.test.espresso:espresso-core:" + Versions.espresso_core
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_reflect: String = "org.jetbrains.kotlin:kotlin-reflect:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://developer.android.com/testing
+   */
+  const val androidx_test_ext_junit: String = "androidx.test.ext:junit:" +
+      Versions.androidx_test_ext_junit
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_scripting_compiler_embeddable: String =
-        "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" + Versions.org_jetbrains_kotlin
+  /**
+   * http://tools.android.com/
+   */
+  const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
 
-    /**
-     * 1.3.72
-     */
-    const val kotlin_stdlib_common: String = "org.jetbrains.kotlin:kotlin-stdlib-common:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * http://tools.android.com/
+   */
+  const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
+      Versions.com_android_tools_build_gradle
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_stdlib_jdk8: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * http://tools.android.com/
+   */
+  const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
 
-    /**
-     * 1.3.72
-     */
-    const val kotlin_stdlib_js: String = "org.jetbrains.kotlin:kotlin-stdlib-js:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://github.com/material-components/material-components-android
+   */
+  const val material: String = "com.google.android.material:material:" + Versions.material
 
-    /**
-     * 1.3.72
-     */
-    const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:" +
-        Versions.org_jetbrains_kotlin
+  const val de_fayard_buildsrcversions_gradle_plugin: String =
+      "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +
+      Versions.de_fayard_buildsrcversions_gradle_plugin
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_test_annotations_common: String =
-        "org.jetbrains.kotlin:kotlin-test-annotations-common:" + Versions.org_jetbrains_kotlin
+  /**
+   * http://junit.org
+   */
+  const val junit_junit: String = "junit:junit:" + Versions.junit_junit
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_test_common: String = "org.jetbrains.kotlin:kotlin-test-common:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://github.com/Kotlin/dokka
+   */
+  const val dokka_gradle_plugin: String = "org.jetbrains.dokka:dokka-gradle-plugin:" +
+      Versions.dokka_gradle_plugin
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_test_js: String = "org.jetbrains.kotlin:kotlin-test-js:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_android_extensions_runtime: String =
+      "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" + Versions.org_jetbrains_kotlin
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_test_junit: String = "org.jetbrains.kotlin:kotlin-test-junit:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_android_extensions: String = "org.jetbrains.kotlin:kotlin-android-extensions:" +
+      Versions.org_jetbrains_kotlin
 
-    /**
-     * https://kotlinlang.org/
-     */
-    const val kotlin_test: String = "org.jetbrains.kotlin:kotlin-test:" +
-        Versions.org_jetbrains_kotlin
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:" +
+      Versions.org_jetbrains_kotlin
 
-    const val redux_kotlin: String = "org.reduxkotlin:redux-kotlin:" +
-        Versions.org_reduxkotlin_redux_kotlin
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_reflect: String = "org.jetbrains.kotlin:kotlin-reflect:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_scripting_compiler_embeddable: String =
+      "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:" + Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_stdlib_common: String = "org.jetbrains.kotlin:kotlin-stdlib-common:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_stdlib: String = "org.jetbrains.kotlin:kotlin-stdlib:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_test_annotations_common: String =
+      "org.jetbrains.kotlin:kotlin-test-annotations-common:" + Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_test_common: String = "org.jetbrains.kotlin:kotlin-test-common:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_test_js: String = "org.jetbrains.kotlin:kotlin-test-js:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_test_junit: String = "org.jetbrains.kotlin:kotlin-test-junit:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://kotlinlang.org/
+   */
+  const val kotlin_test: String = "org.jetbrains.kotlin:kotlin-test:" +
+      Versions.org_jetbrains_kotlin
+
+  /**
+   * https://github.com/Kotlin/kotlinx.coroutines
+   */
+  const val kotlinx_coroutines_android: String =
+      "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.kotlinx_coroutines_android
+
+  /**
+   * https://github.com/reduxkotlin/redux-kotlin-thunk/
+   */
+  const val redux_kotlin_thunk: String = "org.reduxkotlin:redux-kotlin-thunk:" +
+      Versions.org_reduxkotlin
+
+  /**
+   * https://github.com/reduxkotlin/redux-kotlin/
+   */
+  const val redux_kotlin: String = "org.reduxkotlin:redux-kotlin:" + Versions.org_reduxkotlin
 }

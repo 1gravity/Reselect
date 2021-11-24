@@ -1,4 +1,4 @@
-# Reselect
+# Redux-Kotlin - Select
 
 ![CI](https://github.com/reduxkotlin/Reselect/workflows/PR/badge.svg)
 

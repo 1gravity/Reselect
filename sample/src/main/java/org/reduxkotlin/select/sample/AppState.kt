@@ -1,4 +1,4 @@
-package org.reduxkotlin.reselect.sample
+package org.reduxkotlin.select.sample
 
 data class AppState(
     val counter: Int = 0,

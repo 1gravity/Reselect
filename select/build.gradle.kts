@@ -1,14 +1,11 @@
 plugins {
-    java
     kotlin("multiplatform")
+    id("com.android.library")
 }
 
 kotlin {
-    androidNativeArm32()
-    androidNativeArm64()
-    iosArm32()
-    iosArm64()
-    iosX64()
+    android()
+    ios()
     js(BOTH) {
         browser()
         nodejs()
@@ -44,7 +41,6 @@ kotlin {
                 implementation(Libs.redux_kotlin)
             }
         }
-
         commonTest {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -52,46 +48,40 @@ kotlin {
             }
         }
 
-        val fallback: (org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet.() -> Unit) = {
-            kotlin.srcDir("src/fallbackMain")
-        }
-        val ios: (org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet.() -> Unit) = {
-            kotlin.srcDir("src/iosMain/kotlin")
-        }
+        android { dependencies { } }
+        iosArm32 { dependencies {  } }
+        iosArm64 { dependencies {  } }
+        iosX64 { dependencies {  } }
+        linuxArm32Hfp { dependencies {  } }
+        linuxArm64 { dependencies {  } }
+        linuxMips32 { dependencies {  } }
+        linuxMipsel32 { dependencies {  } }
+        linuxX64 { dependencies {  } }
+        js { dependencies {  } }
+        jvm { dependencies {  } }
+        mingwX64 { dependencies {  } }
+        mingwX86 { dependencies {  } }
+        tvosArm64 { dependencies {  } }
+        tvosX64 { dependencies {  } }
+        wasm32 { dependencies {  } }
+        watchosArm32 { dependencies {  } }
+        watchosArm64 { dependencies {  } }
+        watchosX86 { dependencies {  } }
+    }
+}
 
-        val androidNativeArm32Main by getting(fallback)
-        val androidNativeArm64Main by getting(fallback)
-        val iosArm32Main by getting(ios)
-        val iosArm32Test by getting(ios)
-        val iosArm64Main by getting(ios)
-        val iosArm64Test by getting(ios)
-        val iosX64Main by getting(ios)
-        val linuxArm32HfpMain by getting(fallback)
-        val linuxArm64Main by getting(fallback)
-        val linuxMips32Main by getting(fallback)
-        val linuxMipsel32Main by getting(fallback)
-        val linuxX64Main by getting(fallback)
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
-                runtimeOnly(Libs.kotlin_reflect)
-            }
-        }
+android {
+    buildToolsVersion = "31.0.0"
+    compileSdk = 31
 
-        val mingwX64Main by getting(fallback)
-        val mingwX86Main by getting(fallback)
-        val tvosArm64Main by getting(ios)
-        val tvosX64Main by getting(ios)
-        val wasm32Main by getting(fallback)
-        val watchosArm32Main by getting(ios)
-        val watchosArm64Main by getting(ios)
-        val watchosX86Main by getting(ios)
+    defaultConfig {
+        minSdk = 21
+        targetSdk = 31
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
@@ -117,4 +107,4 @@ afterEvaluate {
     }
 }
 
-apply(from = rootProject.file("gradle/publish.gradle"))
+//apply(from = rootProject.file("gradle/publish.gradle"))

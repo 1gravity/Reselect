@@ -1,4 +1,4 @@
-package org.reduxkotlin.reselect.sample
+package org.reduxkotlin.select.sample
 
 import android.os.Bundle
 import android.view.LayoutInflater

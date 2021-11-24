@@ -119,5 +119,6 @@ fun <State : Any> Store<State>.selectors(
 }
 
 fun <State : Any, SelectedState: Any> Store<State>.select(
-    selector: (State) -> SelectedState, action: (SelectedState) -> Unit
-) = selectors { select(selector, action) }
+    selector: (State) -> SelectedState,
+    onChange: (SelectedState) -> Unit
+) = selectors { select(selector, onChange) }
