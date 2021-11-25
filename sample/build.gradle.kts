@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":select"))
+    implementation(project(":reduxkotlin-select"))
 
     implementation("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.core:core-ktx:1.7.0")

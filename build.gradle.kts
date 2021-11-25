@@ -1,4 +1,3 @@
-
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -26,11 +25,5 @@ allprojects {
         mavenCentral()
         maven("https://jitpack.io")
         maven("https://oss.sonatype.org/content/repositories/snapshots")
-    }
-
-    group = project.properties["GROUP"]!!
-    version = project.properties["VERSION_NAME"]!!
-    if (hasProperty("SNAPSHOT") || System.getenv("SNAPSHOT") != null) {
-        version = "$version-SNAPSHOT"
     }
 }
