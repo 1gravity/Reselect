@@ -51,7 +51,7 @@ kotlin {
     sourceSets {
        commonMain { //   <---  name may vary on your project
            dependencies {
-               implementation("com.1gravitytlin:reduxkotlin-select:0.6.0-SNAPSHOT"
+               implementation("com.1gravitytlin:redux-kotlin-select:0.6.0-SNAPSHOT"
            }
        }
    }
@@ -59,7 +59,7 @@ kotlin {
 
 For JVM only:
 ```
-    implementation("com.1gravitytlin:reduxkotlin-select-JVM:0.6.0-SNAPSHOT"
+    implementation("com.1gravitytlin:redux-kotlin-select-JVM:0.6.0-SNAPSHOT"
 ```
 
 [badge-android]: http://img.shields.io/badge/platform-android-brightgreen.svg?style=flat

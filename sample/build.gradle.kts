@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":reduxkotlin-select"))
+    implementation(project(":redux-kotlin-select"))
 
     implementation(AndroidX.appCompat)
     implementation(AndroidX.core.ktx)
