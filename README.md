@@ -18,26 +18,24 @@ Example usage:
 Subscribe to a single sub state:
 
 ```
-// Selecting to sub statebstate subscribes to changes.  
-Lambda block will be executed when there is 
-//a change in value of `isLoading`
+// Selecting to sub state subscribes to changes in that sub state.
+// The Lambda will be executed when there isLoading` is changing.
 val subscription: StoreSubscriber = store.select({ it.isLoading }) { isLoading ->
     loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
 }
 
-// Invoking the subcription unsubscribes.  
-// Do this when appropriate for component lifecycle
+// Invoking the subcription does unsubscribe. Do this when appropriate for component lifecycle
 subscription()  
 ```
 
 Subscribe to multiple sub states:
 ```
 val multiSubscription = store.selectors {
-    select({ it.isLoading }) {
-        loadingIndicator.visibility = if (it) View.VISIBLE else View.GONE
+    select({ it.isLoading }) { isLoading ->
+        loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-    select({ it.name }) {
-        nameTextView.text = it
+    select({ it.name }) { name ->
+        nameTextView.text = name
     }
 }
 
