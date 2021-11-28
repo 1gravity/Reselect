@@ -14,10 +14,6 @@ buildscript {
     }
 }
 
-plugins {
-    id("de.fayard.buildSrcVersions") version "0.4.2"
-}
-
 allprojects {
     repositories {
         gradlePluginPortal()

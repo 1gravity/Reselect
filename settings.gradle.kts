@@ -1,3 +1,5 @@
+import de.fayard.refreshVersions.core.FeatureFlag
+
 pluginManagement {
     repositories {
         google()
@@ -5,6 +7,19 @@ pluginManagement {
         mavenCentral()
         maven("https://jitpack.io")
     }
+}
+
+plugins {
+    // See https://jmfayard.github.io/refreshVersions
+    id("de.fayard.refreshVersions") version "0.23.0"
+}
+
+refreshVersions {
+    featureFlags {
+        enable(FeatureFlag.LIBS)
+        enable(FeatureFlag.GRADLE_UPDATES)
+    }
+    enableBuildSrcLibs()
 }
 
 rootProject.name = "Redux-Kotlin-Select"

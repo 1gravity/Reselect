@@ -1,7 +1,5 @@
 # Redux-Kotlin - Select
 
-![CI](https://github.com/reduxkotlin/Reselect/workflows/PR/badge.svg)
-
 ![badge][badge-android]
 ![badge][badge-native]
 ![badge][badge-js]
@@ -11,59 +9,59 @@
 ![badge][badge-mac]
 ![badge][badge-wasm]
 
-A Redux Reselect implementation for memoized dispatch on state selectors.  Forked from [Reduks](https://github.com/beyondeye/Reduks) implementation.
-
-Documentation to come.
+A Redux library for memoized state selectors.
+Forked from [Reselect](https://github.com/reduxkotlin/Reselect) implementation.
+This repo deviates from the "original" repo considerably so please keep reeading.
 
 Example usage:
 
-Subscribe to a single substate:
+Subscribe to a single sub state:
 
 ```
-//selecting a substate subscribes to changes.  Lambda block will be executed when there is 
+// Selecting to sub statebstate subscribes to changes.  
+Lambda block will be executed when there is 
 //a change in value of `isLoading`
-val subscriber: StoreSubscriber = store.select({ it.isLoading }) {
-        loadingIndicator.visibility = if (store.state.isLoading) View.VISIBLE else View.GONE
-    }
+val subscription: StoreSubscriber = store.select({ it.isLoading }) { isLoading ->
+    loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+}
 
-//invoking subcription unsubscribes.  Do this when appropriate for component lifecycle
-subscriber()  
+// Invoking the subcription unsubscribes.  
+// Do this when appropriate for component lifecycle
+subscription()  
 ```
 
-Subscribe to multiple substates:
+Subscribe to multiple sub states:
 ```
 val multiSubscription = store.selectors {
-            select({ it.isLoading }) {
-                loadingIndicator.visibility = if (store.state.isLoading) View.VISIBLE else View.GONE
-            }
-            select({ it.name }) {
-                nameTextView.text = store.state.name
-            }
-        }
+    select({ it.isLoading }) {
+        loadingIndicator.visibility = if (it) View.VISIBLE else View.GONE
+    }
+    select({ it.name }) {
+        nameTextView.text = it
+    }
+}
 
-//unsubscribe when appropriate
+// Unsubscribe when appropriate
 multiSubscription()
 ```
 __How to add to project:__
 
 Requires Kotlin 1.4.0.
 Artifacts are hosted on maven central.  For multiplatform, add the following to your shared module:
-
-
 ```
 kotlin {
-  sourceSets {
-        commonMain { //   <---  name may vary on your project
-            dependencies {
-                implementation "org.reduxkotlin:reselect:0.5.5"
-            }
-        }
- }
+    sourceSets {
+       commonMain { //   <---  name may vary on your project
+           dependencies {
+               implementation("com.1gravitytlin:reduxkotlin-select:0.6.0-SNAPSHOT"
+           }
+       }
+   }
 ```
 
 For JVM only:
 ```
-  implementation "org.reduxkotlin:reselect-jvm:0.5.5"
+    implementation("com.1gravitytlin:reduxkotlin-select-JVM:0.6.0-SNAPSHOT"
 ```
 
 [badge-android]: http://img.shields.io/badge/platform-android-brightgreen.svg?style=flat

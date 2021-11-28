@@ -1,7 +1,5 @@
 package org.reduxkotlin
 
-import org.reduxkotlin.Store
-import org.reduxkotlin.StoreSubscriber
 import kotlin.jvm.JvmField
 
 interface SelectorInput<S, I> {
@@ -65,8 +63,9 @@ abstract class AbstractSelector<S, O> : Selector<S, O> {
     protected abstract val computeAndCount: (i: Array<out Any>) -> O
 
     /**
-     * 'lazy' because computeandcount is abstract. Cannot reference to it before it is initialized
-     * in concrete selectors 'open' because we can provide a custom memoizer if needed
+     * 'lazy' because computeAndCount is abstract.
+     * Cannot reference to it before it is initialized in concrete selectors 'open' because we can
+     * provide a custom memoizer if needed.
      */
     open val memoizer by lazy { computationMemoizer(computeAndCount) }
 }
@@ -85,11 +84,11 @@ class InputField<S, I>(
 /**
  * Helper function that creates a DSL for subscribing to changes in specific state fields and
  * actions to take.
- * Inside the lambda there is access to the current state through the var `state`
+ * Inside the lambda there is access to the selected state through the var `it`
  *
  * ex:
  *      val sel = selectorSubscriberFn {
- *          select({it.foo}, { actionWhenFooChanges() }
+ *          select({it.foo}, { foo -> actionWhenFooChanges() }
  *
  *          withAnyChange {
  *              //called whenever any change happens to state

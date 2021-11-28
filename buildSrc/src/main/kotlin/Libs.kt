@@ -49,11 +49,6 @@ object Libs {
   /**
    * http://tools.android.com/
    */
-  const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
-
-  /**
-   * http://tools.android.com/
-   */
   const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
       Versions.com_android_tools_build_gradle
 
