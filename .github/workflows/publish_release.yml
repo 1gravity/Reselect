@@ -16,10 +16,10 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Publish Release
-      env:
-        ossUsername: ${{ secrets.OSSRH_USERNAME }}
-        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
-        signingKeyId: ${{ secrets.SIGNINGKEYID }}
-        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
-        signingKey: ${{ secrets.SIGNINGKEY }}
-      run: ./gradlew publish
+      run: ./gradlew
+        -PossUsername=${{ secrets.OSSRH_USERNAME }}
+        -PossPassword=${{ secrets.OSSRH_PASSWORD }}
+        -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
+        -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
+        -PsigningKey="${{ secrets.SIGNINGKEY }}"
+        publish

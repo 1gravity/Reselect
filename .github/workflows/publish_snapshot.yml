@@ -19,38 +19,35 @@ jobs:
     - name: Publish macOS artifacts snapshot
       id: publish-macos
       if: matrix.os == 'macos-latest'
-      env:
-        ossUsername: ${{ secrets.OSSRH_USERNAME }}
-        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
-        signingKeyId: ${{ secrets.SIGNINGKEYID }}
-        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
-        signingKey: ${{ secrets.SIGNINGKEY }}
-        SNAPSHOT: 'TRUE'
-      run: ./gradlew publish
+      run: ./gradlew
+        -PossUsername=${{ secrets.OSSRH_USERNAME }}
+        -PossPassword=${{ secrets.OSSRH_PASSWORD }}
+        -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
+        -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
+        -PsigningKey="${{ secrets.SIGNINGKEY }}"
+        publish
 
     - name: Publish windows artifacts snapshot
       id: publish-win
       if: matrix.os == 'windows-latest'
-      env:
-        ossUsername: ${{ secrets.OSSRH_USERNAME }}
-        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
-        signingKeyId: ${{ secrets.SIGNINGKEYID }}
-        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
-        signingKey: ${{ secrets.SIGNINGKEY }}
-        SNAPSHOT: 'TRUE'
-      run: ./gradlew publish
+      run: ./gradlew
+        -PossUsername=${{ secrets.OSSRH_USERNAME }}
+        -PossPassword=${{ secrets.OSSRH_PASSWORD }}
+        -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
+        -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
+        -PsigningKey="${{ secrets.SIGNINGKEY }}"
+        publish
 
     - name: Publish linux artifacts snapshot
       id: publish-linux
       if: matrix.os == 'ubuntu-latest'
-      env:
-        ossUsername: ${{ secrets.OSSRH_USERNAME }}
-        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
-        signingKeyId: ${{ secrets.SIGNINGKEYID }}
-        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
-        signingKey: ${{ secrets.SIGNINGKEY }}
-        SNAPSHOT: 'TRUE'
-      run: ./gradlew publish
+      run: ./gradlew
+        -PossUsername=${{ secrets.OSSRH_USERNAME }}
+        -PossPassword=${{ secrets.OSSRH_PASSWORD }}
+        -PsigningKeyId=${{ secrets.SIGNINGKEYID }}
+        -PsigningKeyPassword="${{ secrets.SIGNINGKEYPASSWORD }}"
+        -PsigningKey="${{ secrets.SIGNINGKEY }}"
+        publish
 
     - name: Archive publications dir
       uses: actions/upload-artifact@v1
