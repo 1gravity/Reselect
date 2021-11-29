@@ -15,8 +15,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Publish macOS artifacts snapshot
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+        cache: gradle
+        # build release artifacts source and Javadoc jars + publish the artifacts
+    - name: Publish macOS artifacts
       id: publish-macos
       if: matrix.os == 'macos-latest'
       run: ./gradlew
