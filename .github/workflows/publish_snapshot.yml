@@ -16,41 +16,44 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Publish macOS artifacts Snapshot
+    - name: Publish macOS artifacts snapshot
       id: publish-macos
       if: matrix.os == 'macos-latest'
       env:
-        SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-        SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        GPG_SECRET: ${{ secrets.GPG_SECRET }}
-        GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
+        ossUsername: ${{ secrets.OSSRH_USERNAME }}
+        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
+        signingKeyId: ${{ secrets.SIGNINGKEYID }}
+        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
+        signingKey: ${{ secrets.SIGNINGKEY }}
         SNAPSHOT: 'TRUE'
       run: ./gradlew publish
 
-    - name: Publish windows artifacts Snapshot
+    - name: Publish windows artifacts snapshot
       id: publish-win
       if: matrix.os == 'windows-latest'
       env:
-        SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-        SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        GPG_SECRET: ${{ secrets.GPG_SECRET }}
-        GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
+        ossUsername: ${{ secrets.OSSRH_USERNAME }}
+        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
+        signingKeyId: ${{ secrets.SIGNINGKEYID }}
+        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
+        signingKey: ${{ secrets.SIGNINGKEY }}
         SNAPSHOT: 'TRUE'
       run: ./gradlew publish
 
-    - name: Publish linux artifacts Snapshot
+    - name: Publish linux artifacts snapshot
       id: publish-linux
       if: matrix.os == 'ubuntu-latest'
       env:
-        SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
-        SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
-        GPG_SECRET: ${{ secrets.GPG_SECRET }}
-        GPG_SIGNING_PASSWORD: ${{ secrets.GPG_SIGNING_PASSWORD }}
+        ossUsername: ${{ secrets.OSSRH_USERNAME }}
+        ossPassword: ${{ secrets.OSSRH_PASSWORD }}
+        signingKeyId: ${{ secrets.SIGNINGKEYID }}
+        signingKeyPassword: ${{ secrets.SIGNINGKEYPASSWORD }}
+        signingKey: ${{ secrets.SIGNINGKEY }}
         SNAPSHOT: 'TRUE'
       run: ./gradlew publish
 
-    - name: Archive reselect publications dir
+    - name: Archive publications dir
       uses: actions/upload-artifact@v1
       with:
         name: publications-${{ matrix.os }}
-        path: reselect/build/publications
+        path: select/build/publications
