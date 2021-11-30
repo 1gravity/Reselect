@@ -156,7 +156,7 @@ kotlin {
     disableCompilationsIfNeeded()
 
     // disable publications if we're on the "wrong" platform or if they are not on our list
-    val publicationsAllowed = listOf(project.name, "kotlinMultiplatform", "jvm", "ios", "js", "android")
+    val publicationsAllowed = listOf(project.name, "kotlinMultiplatform", "jvm", "iosX64", "iosArm64", "js", "android")
     disablePublicationTasksIfNeeded(publicationsAllowed)
 }
 
