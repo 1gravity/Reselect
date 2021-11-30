@@ -3,19 +3,16 @@ import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
-import java.net.URI
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
 
-    id("maven-publish")
-    id("signing")
+    id("publish")
 }
 
 val props: MutableMap<String, *> = project.properties
 group = props["POM_GROUP_ID"].toString()
-// = props["POM_ARTIFACT_ID"].toString()
 version = props["POM_VERSION_NAME"].toString()
 
 enum class HostType {
@@ -27,7 +24,6 @@ fun KotlinTarget.getHostType(): HostType? =
         KotlinPlatformType.androidJvm,
         KotlinPlatformType.jvm,
         KotlinPlatformType.js -> HostType.LINUX
-
         KotlinPlatformType.native ->
             when {
                 name.startsWith("ios") -> HostType.MAC_OS
@@ -41,7 +37,7 @@ fun KotlinTarget.getHostType(): HostType? =
     }
 
 fun KotlinTarget.isCompilationAllowed(): Boolean {
-    if ((name == KotlinMultiplatformPlugin.METADATA_TARGET_NAME)) {
+    if (name == KotlinMultiplatformPlugin.METADATA_TARGET_NAME) {
         return true
     }
 
@@ -84,15 +80,14 @@ fun Project.disablePublicationTasksIfNeeded(publicationsAllowed: List<String> = 
     fun AbstractPublishToMaven.isAllowed(targets: NamedDomainObjectCollection<KotlinTarget>): Boolean {
         val publicationName: String? = publication?.name
         return when {
+            publicationName == this@disablePublicationTasksIfNeeded.name -> true
             publicationName == "kotlinMultiplatform" -> true
-            publicationName != null -> {
-                val target = targets.find { it.name.startsWith(publicationName) }
-                target?.isCompilationAllowed() == true
-            }
-            else -> {
-                val target = targets.find { name.contains(other = it.name, ignoreCase = true) }
-                target?.isCompilationAllowed() == true
-            }
+            publicationName != null -> targets
+                .firstOrNull { it.name.startsWith(publicationName) }
+                ?.isCompilationAllowed() == true
+            else -> targets
+                .firstOrNull { name.contains(other = it.name, ignoreCase = true) }
+                ?.isCompilationAllowed() == true
         }
     }
 
@@ -157,90 +152,11 @@ kotlin {
         watchosX86 { dependencies {  } }
     }
 
-    // must come before the publishing call
+    // only compile certain targets on certain platforms
     disableCompilationsIfNeeded()
 
-    publishing {
-        fun Project.getRepositoryUrl(): URI {
-            val isReleaseBuild = properties["POM_VERSION_NAME"]?.toString()?.contains("SNAPSHOT") == false
-            val releaseRepoUrl = properties["RELEASE_REPOSITORY_URL"]?.toString() ?: "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            val snapshotRepoUrl = properties["SNAPSHOT_REPOSITORY_URL"]?.toString() ?: "https://oss.sonatype.org/content/repositories/snapshots/"
-            return uri(if (isReleaseBuild) releaseRepoUrl else snapshotRepoUrl)
-        }
-
-        publications {
-            val props = project.properties
-
-            // 1. configure repositories
-            repositories {
-                maven {
-                    url = getRepositoryUrl()
-                    // credentials are stored in ~/.gradle/gradle.properties with ~ being the path of the home directory
-                    credentials {
-                        username = props["ossUsername"]?.toString() ?: throw IllegalStateException("ossUsername not found")
-                        password = props["ossPassword"]?.toString() ?: throw IllegalStateException("ossPassword not found")
-                    }
-                }
-            }
-
-            // 2. configure publication
-            val publicationName = props["POM_NAME"]?.toString() ?: "publication"
-            create<MavenPublication>(publicationName) {
-                pom {
-                    groupId = props["POM_GROUP_ID"].toString()
-                    artifactId = props["POM_ARTIFACT_ID"].toString()
-                    version = props["POM_VERSION_NAME"].toString()
-
-                    name.set(props["POM_NAME"].toString())
-                    description.set(props["POM_DESCRIPTION"].toString())
-                    url.set(props["POM_URL"].toString())
-                    packaging = props["POM_PACKAGING"].toString()
-
-                    scm {
-                        url.set(props["POM_SCM_URL"].toString())
-                        connection.set(props["POM_SCM_CONNECTION"].toString())
-                        developerConnection.set(props["POM_SCM_DEV_CONNECTION"].toString())
-                    }
-
-                    organization {
-                        name.set(props["POM_COMPANY_NAME"].toString())
-                        url.set(props["POM_COMPANY_URL"].toString())
-                    }
-
-                    developers {
-                        developer {
-                            id.set(props["POM_DEVELOPER_ID"].toString())
-                            name.set(props["POM_DEVELOPER_NAME"].toString())
-                            email.set(props["POM_DEVELOPER_EMAIL"].toString())
-                        }
-                    }
-
-                    licenses {
-                        license {
-                            name.set(props["POM_LICENCE_NAME"].toString())
-                            url.set(props["POM_LICENCE_URL"].toString())
-                            distribution.set(props["POM_LICENCE_DIST"].toString())
-                        }
-                    }
-                }
-            }
-
-            // 3. sign the artifacts
-            signing {
-                val signingKeyId = props["signingKeyId"]?.toString()
-                    ?: throw IllegalStateException("signingKeyId not found")
-                val signingKeyPassword = props["signingKeyPassword"]?.toString()
-                    ?: throw IllegalStateException("signingKeyPassword not found")
-                val signingKey = props["signingKey"]?.toString()
-                    ?: throw IllegalStateException("signingKey not found")
-                useInMemoryPgpKeys(signingKeyId, signingKey, signingKeyPassword)
-                sign(publishing.publications.getByName(publicationName))
-            }
-        }
-    }
-
-    // must come after the publishing call
-    val publicationsAllowed = listOf("kotlinMultiplatform", "jvm", "ios", "js")
+    // disable publications if we're on the "wrong" platform or if they are not on our list
+    val publicationsAllowed = listOf(project.name, "kotlinMultiplatform", "jvm", "ios", "js", "android")
     disablePublicationTasksIfNeeded(publicationsAllowed)
 }
 
