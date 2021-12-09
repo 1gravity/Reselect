@@ -1,6 +1,7 @@
 package org.reduxkotlin.select.demo
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,7 +19,11 @@ import org.reduxkotlin.select.*
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var loadingIndicator: ProgressBar
+    private lateinit var loadingIndicator: ProgressBar
+
+    private var subscription: StoreSubscription? = null
+
+    private var multiSubscription: StoreSubscription? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,19 +44,19 @@ class MainActivity : AppCompatActivity() {
 
         multiSubscription = store.selectors {
             select({ it.isLoading }) {
+                Log.e("redux", "isLoading: $it")
                 loadingIndicator.visibility = if (it) View.VISIBLE else View.GONE
+            }
+            select({ it.counter }) {
+                Log.e("redux", "counter: $it")
             }
         }
     }
 
-    lateinit var subscription: StoreSubscription
-
-    lateinit var multiSubscription: StoreSubscription
-
     override fun onDestroy() {
         super.onDestroy()
-//        subscription()
-        multiSubscription()
+        subscription?.invoke()
+        multiSubscription?.invoke()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -74,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 /**
  * A fake network request thunk.  Just delays then dispatches a LoadingCompleteAction
  */
-fun networkRequest(): Thunk<AppState> = { dispatch, _, _ ->
+private fun networkRequest(): Thunk<AppState> = { dispatch, _, _ ->
     dispatch(StartLoading)
     GlobalScope.launch {
         delay(5000L)
@@ -88,7 +93,7 @@ object IncrementAction
 object StartLoading
 object LoadingComplete
 
-val reducer: Reducer<AppState> = { state, action ->
+private val reducer: Reducer<AppState> = { state, action ->
     when (action) {
         StartLoading -> state.copy(isLoading = true)
         LoadingComplete -> state.copy(isLoading = false)
